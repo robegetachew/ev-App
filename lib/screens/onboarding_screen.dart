@@ -64,12 +64,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     (index) => buildDot(index == _currentIndex),
               ),
             ),
-            FloatingActionButton(
+            _currentIndex < pages.length - 1
+                ? FloatingActionButton(
               heroTag: "next",
               onPressed: _nextPage,
               backgroundColor: Colors.green,
               child: const Icon(Icons.arrow_forward),
-            ),
+            )
+                : const SizedBox(width: 56), // placeholder to maintain spacing
           ],
         ),
       ),

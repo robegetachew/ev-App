@@ -5,22 +5,41 @@ class OnboardingPageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.electric_car, size: 100, color: Colors.green),
-            SizedBox(height: 32),
-            Text('Find nearby station', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
-            Text(
-              'Find available EV charging stations across Addis Ababa with live updates.',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black54),
-            ),
-          ],
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 202,
+                height: 202,
+                child: Image.asset(
+                  'assets/Component 5.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(height: 40),
+              const Text(
+                'Find Nearby Station',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Find available EV charging stations across Addis Ababa with live updates.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

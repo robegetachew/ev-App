@@ -87,3 +87,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  assets:
+    - assets/Thumbnail.png
+    - assets/Component 5.png
+    - assets/Component 6.png
+    - assets/Component.png
+    - assets/images 1.png
