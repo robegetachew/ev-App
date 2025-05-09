@@ -28,7 +28,7 @@ class _ChargerTypePageState extends State<ChargerTypePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("select Charger", style: TextStyle(color: Colors.black)),
+        title: const Text("Select Charger", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),

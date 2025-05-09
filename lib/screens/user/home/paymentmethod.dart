@@ -100,7 +100,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                     ),
                   );
                 },
-                child: const Text("continue", style: TextStyle(color: Colors.white)),
+                child: const Text("Continue", style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

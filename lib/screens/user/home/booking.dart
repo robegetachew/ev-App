@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'paymentmethod.dart'; // make sure this is correct
+import 'paymentmethod.dart';
+import 'priority_consent.dart';
 
 class Booking extends StatefulWidget {
   const Booking({super.key});
@@ -31,17 +32,25 @@ class _BookingState extends State<Booking> {
         elevation: 0,
         title: const Text("Booking", style: TextStyle(color: Colors.black)),
         actions: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(20),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PriorityConsentPage()),
+              );
+            },
+            icon: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                "Priority Service",
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
-            child: const Center(
-              child: Text("Priority Service", style: TextStyle(color: Colors.white)),
-            ),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -50,7 +59,7 @@ class _BookingState extends State<Booking> {
           children: [
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text("select Date", style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text("Select Date", style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             const SizedBox(height: 10),
             CalendarDatePicker(
@@ -62,7 +71,7 @@ class _BookingState extends State<Booking> {
             const SizedBox(height: 20),
             _buildDropdownTile(
               icon: Icons.access_time,
-              label: "select Arrival Time",
+              label: "Select Arrival Time",
               value: selectedTime,
               items: times,
               onChanged: (val) => setState(() => selectedTime = val!),
@@ -70,7 +79,7 @@ class _BookingState extends State<Booking> {
             const SizedBox(height: 20),
             _buildDropdownTile(
               icon: Icons.access_time,
-              label: "select Charging Duration",
+              label: "Select Charging Duration",
               value: selectedDuration,
               items: durations,
               onChanged: (val) => setState(() => selectedDuration = val!),
@@ -88,7 +97,7 @@ class _BookingState extends State<Booking> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      "you can only book available times.\nUnavailable times means someone else has booked it",
+                      "You can only book available times.\nUnavailable times means someone else has booked it",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
