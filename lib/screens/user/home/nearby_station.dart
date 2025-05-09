@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'all_stations.dart';
 
 class NearbyStationsScreen extends StatefulWidget {
   const NearbyStationsScreen({super.key});
@@ -9,8 +10,8 @@ class NearbyStationsScreen extends StatefulWidget {
 
 class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> stations = [];
-  List<Map<String, dynamic>> filteredStations = [];
+  late List<Map<String, dynamic>> stations;
+  late List<Map<String, dynamic>> filteredStations;
 
   @override
   void initState() {
@@ -18,9 +19,11 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
     stations = List.generate(7, (index) {
       final isOpen = index % 2 == 0;
       return {
-        'name': 'Ethio Charging point',
+        'name': 'Ethio Charging point ${index + 1}',
+        'lat': 9.04 + index * 0.002,
+        'lng': 38.74 + index * 0.002,
         'distance': '${300 + index * 100} m',
-        'status': isOpen ? 'open' : 'closed',
+        'status': isOpen ? 'free' : (index % 3 == 0 ? 'not working' : 'occupied'),
         'rating': 3 + (index % 2),
       };
     });
@@ -91,11 +94,23 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text('nearby stations',
+              children: [
+                const Text('nearby stations',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text('see all',
-                    style: TextStyle(color: Colors.green, fontSize: 14)),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => StationMapScreen(
+                          stations: filteredStations,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('see all',
+                      style: TextStyle(color: Colors.green, fontSize: 14)),
+                ),
               ],
             ),
           ),
@@ -104,7 +119,7 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
               itemCount: filteredStations.length,
               itemBuilder: (context, index) {
                 final station = filteredStations[index];
-                final isOpen = station['status'] == 'open';
+                final status = station['status'];
                 final rating = station['rating'];
 
                 return Padding(
@@ -127,7 +142,11 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundColor: isOpen ? Colors.green : Colors.red,
+                          backgroundColor: status == 'free'
+                              ? Colors.green
+                              : status == 'occupied'
+                              ? Colors.red
+                              : Colors.blue,
                           radius: 24,
                           child: const Icon(Icons.ev_station, color: Colors.white),
                         ),
@@ -173,11 +192,15 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                color: isOpen ? Colors.green : Colors.red,
+                                color: status == 'free'
+                                    ? Colors.green
+                                    : status == 'occupied'
+                                    ? Colors.red
+                                    : Colors.blue,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                station['status'].toUpperCase(),
+                                status.toUpperCase(),
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 10),
                               ),
@@ -200,12 +223,9 @@ class _NearbyStationsScreenState extends State<NearbyStationsScreen> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_border), label: 'My Booking'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_balance_wallet), label: 'Wallet'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'My Account'),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: 'My Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet), label: 'Wallet'),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'My Account'),
         ],
       ),
     );
