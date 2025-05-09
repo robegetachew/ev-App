@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'charger_type_page.dart';
 
 class StationMapScreen extends StatelessWidget {
   final List<Map<String, dynamic>> stations;
@@ -40,19 +41,28 @@ class StationMapScreen extends StatelessWidget {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: Text(station['name']),
-                            content: Text("Status: ${station['status']}"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text("Close"),
-                              )
-                            ],
-                          ),
-                        );
+                        if (station['status'] == 'free') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ChargerTypePage(station: station),
+                            ),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(station['name']),
+                              content: Text("Status: ${station['status']}"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text("Close"),
+                                )
+                              ],
+                            ),
+                          );
+                        }
                       },
                       child: Tooltip(
                         message: station['name'],
