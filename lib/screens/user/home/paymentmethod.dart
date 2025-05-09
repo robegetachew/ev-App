@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'review_summary_page.dart';
 
 class PaymentMethodPage extends StatefulWidget {
   const PaymentMethodPage({super.key});
@@ -25,10 +26,8 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
         leading: const BackButton(color: Colors.black),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          "Select Payment Method",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
+        title: const Text("Select Payment Method",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -92,7 +91,14 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 onPressed: () {
-                  // Continue logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ReviewSummaryPage(
+                        selectedPayment: paymentMethods[selectedIndex],
+                      ),
+                    ),
+                  );
                 },
                 child: const Text("continue", style: TextStyle(color: Colors.white)),
               ),
