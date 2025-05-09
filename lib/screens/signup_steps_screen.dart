@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'user/location_permission_screen.dart';
 
 class SignupStepsScreen extends StatefulWidget {
   const SignupStepsScreen({super.key});
@@ -215,6 +216,12 @@ class _SignupStepsScreenState extends State<SignupStepsScreen> {
         );
 
       case 4:
+        Future.delayed(const Duration(seconds: 4), () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const LocationPermissionScreen()),
+          );
+        });
+
         return Column(
           children: [
             const Text(
@@ -254,7 +261,7 @@ class _SignupStepsScreenState extends State<SignupStepsScreen> {
             ),
             const SizedBox(height: 36),
             ElevatedButton(
-              onPressed: null,
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 padding: const EdgeInsets.symmetric(vertical: 14),
@@ -282,6 +289,7 @@ class _SignupStepsScreenState extends State<SignupStepsScreen> {
             ),
           ],
         );
+
 
       default:
         return const SizedBox();
